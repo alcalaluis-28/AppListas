@@ -27,11 +27,13 @@ public class BuscadorPersonaje extends AppCompatActivity {
     //Java
     EditText edtIdPersonaje, edtNombre, edtKi, edtRaza, edtGenero;
     Button btnBuscarPersonaje;
+    Button btnReiniciar;
 
     private void loadUi() {
         //Vinculacion
         edtIdPersonaje = findViewById(R.id.edtIdPersonaje);
         btnBuscarPersonaje = findViewById(R.id.btnBuscarPersonaje);
+        btnReiniciar = findViewById(R.id.btnReiniciar);
         edtNombre = findViewById(R.id.edtNombre);
         edtKi = findViewById(R.id.edtKi);
         edtRaza = findViewById(R.id.edtRaza);
@@ -50,7 +52,17 @@ public class BuscadorPersonaje extends AppCompatActivity {
         btnBuscarPersonaje.setOnClickListener(view -> {
             getDataCharacter();
         });
+        btnReiniciar.setOnClickListener(view -> {
+            clearUI();
+        });
     } //Oncreate
+    private void clearUI(){
+        edtIdPersonaje.setText("");
+        edtNombre.setText("");
+        edtKi.setText("");
+        edtRaza.setText("");
+        edtGenero.setText("");
+    }
 
     private void getDataCharacter() {
         //Comunicacion con la API de Dragon Ball
