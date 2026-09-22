@@ -32,6 +32,14 @@
         android:layout_height="wrap_content"
         android:text="Reiniciar"
         android:layout_marginBottom="16dp"/>
+    
+    <ImageView
+        android:id="@+id/imgPersonaje"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:contentDescription="Imagen del personaje"
+        android:layout_marginBottom="16dp"/>
 
     <EditText
         android:id="@+id/edtNombre"

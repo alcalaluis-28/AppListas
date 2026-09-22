@@ -19,6 +19,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.widget.ImageView;
+import com.bumptech.glide.Glide;
+
 public class BuscadorPersonaje extends AppCompatActivity {
 
     RequestQueue requestQueue;
@@ -28,16 +31,19 @@ public class BuscadorPersonaje extends AppCompatActivity {
     EditText edtIdPersonaje, edtNombre, edtKi, edtRaza, edtGenero;
     Button btnBuscarPersonaje;
     Button btnReiniciar;
+    ImageView imgPersonaje;
 
     private void loadUi() {
         //Vinculacion
         edtIdPersonaje = findViewById(R.id.edtIdPersonaje);
         btnBuscarPersonaje = findViewById(R.id.btnBuscarPersonaje);
         btnReiniciar = findViewById(R.id.btnReiniciar);
+        imgPersonaje = findViewById(R.id.imgPersonaje);
         edtNombre = findViewById(R.id.edtNombre);
         edtKi = findViewById(R.id.edtKi);
         edtRaza = findViewById(R.id.edtRaza);
         edtGenero = findViewById(R.id.edtGenero);
+
     }
 
     @Override
@@ -62,6 +68,7 @@ public class BuscadorPersonaje extends AppCompatActivity {
         edtKi.setText("");
         edtRaza.setText("");
         edtGenero.setText("");
+        imgPersonaje.setImageDrawable(null);
     }
 
     private void getDataCharacter() {
@@ -102,6 +109,14 @@ public class BuscadorPersonaje extends AppCompatActivity {
             edtRaza.setText(jsonObject.getString("race"));
             edtGenero.setText(jsonObject.getString("gender"));
             edtKi.setText(jsonObject.getString("ki"));
+            //Obtener imagen del personaje
+            String urlImagen = jsonObject.getString("image");
+
+            //Cargar imagen en ImageView
+            Glide.with(this)
+                    .load(urlImagen)
+                    .into(imgPersonaje);
+
         } catch (Exception e) {
             Log.e("Error Json", e.toString());
         }
