@@ -41,6 +41,14 @@
         android:contentDescription="Imagen del personaje"
         android:layout_marginBottom="16dp"/>
 
+    <Button
+        android:id="@+id/btnTransformaciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ver Transformaciones"
+        android:enabled="false"
+        android:layout_marginBottom="16dp"/>
+
     <EditText
         android:id="@+id/edtNombre"
         android:layout_width="match_parent"

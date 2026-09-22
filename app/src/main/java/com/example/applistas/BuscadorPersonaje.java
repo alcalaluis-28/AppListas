@@ -22,15 +22,20 @@ import org.json.JSONObject;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+import org.json.JSONArray;
+
 public class BuscadorPersonaje extends AppCompatActivity {
 
     RequestQueue requestQueue;
+    ArrayList<String> listaTransformaciones;
     final String URL = "https://dragonball-api.com/api/characters/";
 
     //Java
     EditText edtIdPersonaje, edtNombre, edtKi, edtRaza, edtGenero;
     Button btnBuscarPersonaje;
     Button btnReiniciar;
+    Button btnTransformaciones;
     ImageView imgPersonaje;
 
     private void loadUi() {
@@ -39,6 +44,7 @@ public class BuscadorPersonaje extends AppCompatActivity {
         btnBuscarPersonaje = findViewById(R.id.btnBuscarPersonaje);
         btnReiniciar = findViewById(R.id.btnReiniciar);
         imgPersonaje = findViewById(R.id.imgPersonaje);
+        btnTransformaciones = findViewById(R.id.btnTransformaciones);
         edtNombre = findViewById(R.id.edtNombre);
         edtKi = findViewById(R.id.edtKi);
         edtRaza = findViewById(R.id.edtRaza);
@@ -54,6 +60,8 @@ public class BuscadorPersonaje extends AppCompatActivity {
 
         this.loadUi();
 
+        listaTransformaciones = new ArrayList<>();
+
         //Event
         btnBuscarPersonaje.setOnClickListener(view -> {
             getDataCharacter();
@@ -61,6 +69,10 @@ public class BuscadorPersonaje extends AppCompatActivity {
         btnReiniciar.setOnClickListener(view -> {
             clearUI();
         });
+        btnTransformaciones.setOnClickListener(view -> {
+            showTransformations();
+        });
+
     } //Oncreate
     private void clearUI(){
         edtIdPersonaje.setText("");
@@ -69,6 +81,30 @@ public class BuscadorPersonaje extends AppCompatActivity {
         edtRaza.setText("");
         edtGenero.setText("");
         imgPersonaje.setImageDrawable(null);
+
+        listaTransformaciones.clear();
+        btnTransformaciones.setEnabled(false);
+    }
+    private void showTransformations(){
+        if(listaTransformaciones.isEmpty()){
+            Toast.makeText(
+                    getApplicationContext(),
+                    "No tiene transformaciones",
+                    Toast.LENGTH_SHORT
+            ).show();
+            return;
+        }
+
+        StringBuilder transformations = new StringBuilder();
+        for(String transformation :listaTransformaciones){
+            transformations.append(transformation)
+                    .append("\n");
+        }
+        Toast.makeText(
+                getApplicationContext(),
+                transformations.toString(),
+                Toast.LENGTH_LONG
+        ).show();
     }
 
     private void getDataCharacter() {
@@ -116,6 +152,21 @@ public class BuscadorPersonaje extends AppCompatActivity {
             Glide.with(this)
                     .load(urlImagen)
                     .into(imgPersonaje);
+
+            //Leer transformaciones
+            JSONArray transformations = jsonObject.getJSONArray("transformations");
+            listaTransformaciones.clear();
+            for (int i = 0; i < transformations.length(); i++){
+                JSONObject transformation = transformations.getJSONObject(i);
+                listaTransformaciones.add(
+                        transformation.getString("name")
+                );
+            }
+            if(listaTransformaciones.size() > 0) {
+                btnTransformaciones.setEnabled(true);
+            }else{
+                btnTransformaciones.setEnabled(false);
+            }
 
         } catch (Exception e) {
             Log.e("Error Json", e.toString());
