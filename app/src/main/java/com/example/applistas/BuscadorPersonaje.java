@@ -124,6 +124,9 @@ public class BuscadorPersonaje extends AppCompatActivity {
                 try {
                     JSONObject jsonError = new JSONObject(dataError);
                     Toast.makeText(getApplicationContext(), jsonError.getString("message"), Toast.LENGTH_SHORT).show();
+                    //Limpia la pantalla cuando el personaje no existe
+                    clearUI();
+
                     Log.e("ErrorWS", dataError);
                 } catch (JSONException ex) {
                     throw new RuntimeException(ex);
