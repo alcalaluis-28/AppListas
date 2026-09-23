@@ -1,7 +1,7 @@
 # 🐉 AppListas - Buscador de Personajes Dragon Ball
 
 <p align="center">
-<img src="https://dragonball-api.com/images/characters/goku_normal.webp" width="180">
+<img src="imagenes/img_dragon_ball.jpg" width="180">
 </p>
 
 ## 📱 Descripción
